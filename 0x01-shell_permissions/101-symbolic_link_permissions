@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod -h --no-dereference --from=julien:julien vincent:staff _hello
+chmod -h vincent:staff _hello
