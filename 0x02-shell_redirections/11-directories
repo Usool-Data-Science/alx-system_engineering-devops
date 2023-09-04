@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -al | find -d -mindepth -maxdepth | wc -l
+ls -al | find . -d -mindepth -maxdepth | wc -l
