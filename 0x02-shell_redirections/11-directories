@@ -1,0 +1,2 @@
+#!/bin/bash
+ls -al | find -d | wc -l
