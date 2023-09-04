@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -al | find . -d -mindepth -maxdepth | wc -l
+find . -mindepth 1 -type d -print | grep -v '^\.$' | wc -1
