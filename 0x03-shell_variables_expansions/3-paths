@@ -1,2 +1,2 @@
 #!/bin/bash
-IFS=":" read -ra path_elements <<< "$PATH" | echo ${#path_elements[@]}
+echo $PATH | tr ':' '\n' | wc -l
