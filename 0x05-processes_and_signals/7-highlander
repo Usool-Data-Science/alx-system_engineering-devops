@@ -2,7 +2,7 @@
 #Stoping an invisible process
 while true
 do
-	echo "I am invicible!!!"
+	echo "To infinity and beyond"
 	sleep 2
 	trap "echo 'I am invicible';" SIGTERM
 done
