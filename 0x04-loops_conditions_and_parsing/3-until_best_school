@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Prints "Best Schoo" 10 times using until.
+ind=1
+until [[ $ind -eq 10 ]]
+do
+	echo "Best School"
+	(( ind++ ))
+done
