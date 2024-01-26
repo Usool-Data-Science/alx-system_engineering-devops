@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Conditionally prints "Best School"
+ind=0
+until [[ $ind -eq 10 ]]
+do
+	if [[ $ind -ne 8 ]]
+	then
+		echo "Best School"
+	else
+		echo "Hi"
+	fi
+	(( ind++ ))
+done
