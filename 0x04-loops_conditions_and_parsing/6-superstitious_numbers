@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Conditionally prints "Best School"
+ind=1
+while [[ $ind -le 20 ]]
+do
+	if [[ $ind -eq 4 ]]
+	then
+		echo $ind
+		echo "bad luck from China"
+	elif [[ $ind -eq 9 ]]
+	then
+		echo $ind
+		echo "bad luck from Japan"
+	elif [[ $ind -eq 17 ]]
+	then
+		echo $ind
+		echo "bad luck from Italy"
+	else
+		echo $ind
+	fi
+	(( ind++ ))
+done
