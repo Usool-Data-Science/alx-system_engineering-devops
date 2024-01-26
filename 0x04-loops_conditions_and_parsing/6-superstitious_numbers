@@ -3,20 +3,11 @@
 ind=1
 while [[ $ind -le 20 ]]
 do
-	if [[ $ind -eq 4 ]]
-	then
-		echo $ind
-		echo "bad luck from China"
-	elif [[ $ind -eq 9 ]]
-	then
-		echo $ind
-		echo "bad luck from Japan"
-	elif [[ $ind -eq 17 ]]
-	then
-		echo $ind
-		echo "bad luck from Italy"
-	else
-		echo $ind
-	fi
+	echo "$ind"
+	case $ind in
+	"4") echo "bad luck from China";;
+	"9") echo "bad luck from Japan";;
+	"17") echo "bad luck from Italy";;
+	esac
 	(( ind++ ))
 done
