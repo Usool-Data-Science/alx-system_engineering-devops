@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#Stoping an invisible process
+while true
+do
+	echo "I am invicible!!!"
+	sleep 2
+	trap "echo 'I am invicible';" SIGTERM
+done
+
