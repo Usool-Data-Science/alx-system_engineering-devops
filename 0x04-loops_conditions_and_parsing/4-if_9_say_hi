@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Conditionally prints "Best School"
 ind=0
-until [[ $ind -eq 10 ]]
+while [[ $ind -ne 10 ]]
 do
 	if [[ $ind -ne 8 ]]
 	then
