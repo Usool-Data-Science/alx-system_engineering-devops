@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 # Conditionally prints "Best School"
 ind=0
-while [[ $ind -ne 10 ]]
+while [[ $ind -lt 10 ]]
 do
-	if [[ $ind -ne 8 ]]
+	if [[ $ind -eq 9 ]]
 	then
-		echo "Best School"
-	else
 		echo "Hi"
 	fi
+	echo 'Best School'
 	(( ind++ ))
 done
