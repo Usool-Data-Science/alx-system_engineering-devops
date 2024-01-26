@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Conditionally prints "Best School"
+ind=0
+while [[ $ind -lt 10 ]]
+do
+	if [[ $ind -eq 3 ]]
+	then
+		echo "bad luck"
+	elif [[ $ind -eq 7 ]]
+	then
+		echo "good luck"
+	else
+		echo 'Best School'
+	fi
+	(( ind++ ))
+done
