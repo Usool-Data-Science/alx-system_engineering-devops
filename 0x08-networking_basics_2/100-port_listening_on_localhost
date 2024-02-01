@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Check if port 98 is listenable on localhost.
+nc -l localhost 98
