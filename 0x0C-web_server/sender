@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+for file in *
+do
+    echo "Now sending $file"
+    if [ "$file != $0" ]
+    then
+        scp -o StrictHostKeyChecking=no -i /home/usool/Usool-learn/mykey.pub "$file" "$1@$2":~
+    fi
+done
