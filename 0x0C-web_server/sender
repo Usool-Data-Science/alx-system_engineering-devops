@@ -4,6 +4,6 @@ do
     echo "Now sending $file"
     if [ "$file != $0" ]
     then
-        scp -o StrictHostKeyChecking=no -i /home/usool/Usool-learn/mykey.pub "$file" "$1@$2":~
+        scp -i "/home/usool/Usool-learn/alx_intranet_key" -o StrictHostKeyChecking=no "$file" "$1@$2":~
     fi
 done
