@@ -4,7 +4,6 @@ $root_path = '/var/www/html'
 $root_content = 'Hello World!'
 $default_path = '/etc/nginx/sites-available/default'
 $redirection = "server_name _;\n\tlocation /redirect_me {\n\t\treturn 301 https://www.youtube.com/watch?v=MKuELPxZHHU;\n\t}\n"
-$server_content = "server {\n\tlisten 80 default_server;\n\tlisten [::]:80 default_server ipv6only=on;\n\troot /var/www/html;\n\tindex index.html;\n\tlocation /redirect_me {\n\treturn 301 http://example.com/;\n}\n}"
 
 exec { 'update':
   command => '/usr/bin/apt-get update'
@@ -29,9 +28,8 @@ file { "${root_path}/index.html":
   require => File[$root_path]
 }
 
-file { $default_path:
-  ensure  => 'present',
-  content => $server_content,
+exec { 'default':
+  command => '/usr/bin/sed -i "s,server_name _;,$redirection," $default_path',
   notify  => Service['nginx']
 }
 
