@@ -32,7 +32,7 @@ file { "${root_path}/index.html":
 
 # Replace the server setup
 file { '/etc/nginx/sites-available/default':
-    content => $server_content;
+    content => $server_content,
     ensure  => 'present',
     notify  => Service['nginx']
 }
