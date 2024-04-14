@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Customizes our webservers
+
+# Update package lists
+apt-get update
+
+# Install Nginx
+apt-get install -y nginx
+
+# Create directory for web content
+mkdir -p /var/www/html
+
+# Create index.html file with sample content
+echo 'Hello World' > /var/www/html/index.html
+
+# Check if "server_name _;" is present in the configuration file
+if grep -q "server_name _;" /etc/nginx/sites-available/default; then
+    # If found, replace it with the desired content
+    sed -i "s/server_name _;/server_name _;\n\tadd_header X-Served-By \$hostname;/" /etc/nginx/sites-available/default
+else
+    # If not found, append it after the index path.
+    sed -i "s/index index.html;/index index.html;\n\tadd_header X-Served-By \$hostname;/" /etc/nginx/sites-available/default
+fi
+
+# Restart Nginx service
+service nginx restart

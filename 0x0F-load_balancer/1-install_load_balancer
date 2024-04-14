@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# set up haproxy
+sudo apt-get -y update
+sudo apt-get -y install 'haproxy'
+cat > '/etc/haproxy/haproxy.cfg' << EOF
+frontend foutain-ai.tech
+	bind *:80
+	stats uri /haproxy?stats
+	default_backend web_servers
+backend web_servers
+	balance roundrobin
+	server 184856-web-01 52.91.120.180
+	server 184856-web-02 34.232.66.100
+EOF
+service haproxy reload
+service haproxy restart
