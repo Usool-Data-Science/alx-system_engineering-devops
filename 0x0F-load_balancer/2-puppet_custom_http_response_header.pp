@@ -3,7 +3,7 @@
 # Global variables
 $root_path = '/var/www/html'
 $root_content = 'Hello World!'
-$server_content = "server {\n\tlisten 80 default_server;\n\tlisten [::]:80 default_server ipv6only=on;\n\troot /var/www/html;\n\tindex index.html;\n\tadd_header X-Served-By \$hostname;\n}\n}"
+$server_content = "server {\n\tlisten 80 default_server;\n\tlisten [::]:80 default_server ipv6only=on;\n\troot /var/www/html;\n\tindex.html;\n\tadd_header X-Served-By \$hostname;\n}"
 
 # Update application list
 exec  { 'Update':
