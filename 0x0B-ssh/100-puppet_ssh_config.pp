@@ -2,7 +2,7 @@
 $key_path='~/.ssh/school'
 $conf_path='~/.ssh/config'
 $key_dir='~/.ssh'
-$config_content="Host *\n\tUser ubuntu\n\tPassAuthentication no\n\tIdentityFile ${key_path}"
+$config_content="Host *\n\tUser ubuntu\n\tPasswordAuthentication no\n\tIdentityFile ${key_path}"
 
 file { $key_dir:
   ensure => 'directory',
