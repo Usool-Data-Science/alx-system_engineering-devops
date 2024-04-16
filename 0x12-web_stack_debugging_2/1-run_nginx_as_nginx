@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Run nginx as nginx user
+
+# Change the config file permission
+chmod 644 /etc/nginx/nginx.conf
+
+# Stop the apache server
+pkill 'apache2'
+
+# Modify the default server settings
+sed -i 's, 80 , 8080 ,' /etc/nginx/sites-available/default
+sed -i 's,:80 ,:8080 ,' /etc/nginx/sites-available/default
+
+# Restart nginx
+sudo -u nginx service nginx restart

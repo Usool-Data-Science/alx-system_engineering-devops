@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Shorter fix to previous solution
+chmod 644 /etc/nginx/nginx.conf
+pkill 'apache2'
+sed -i -e 's/ 80 / 8080 /' -e 's/:80 /:8080 /' /etc/nginx/sites-available/default
+sudo --user nginx servcie nginx restart
