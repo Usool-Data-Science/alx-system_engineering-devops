@@ -4,3 +4,66 @@ sudo wget -O mysql57 https://raw.githubusercontent.com/nuuxcode/alx-system_engin
 #Then create new user on both servers
 sudo mysql -e "CREATE USER 'holberton_user'@'localhost' IDENTIFIED BY 'projectcorrection280hbtn';"
 
+#Grant replication permission to alx user
+sudo mysql -e "GRANT REPLICATION CLIENT ON *,* TO 'holberton_user'@'localhost';"
+
+#Create a database and a table with at least one row
+sudo mysql -e "CREATE DATABASE IF NOT EXISTS tyrell_corp; USE tyrell_corp; CREATE TABLE IF NOT EXISTS nexus6(id INT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(20)); INSERT INTO nexus6(first_name) VALUES ('Ibrahim');"
+
+#Grant select permission to the alx user on the nexus6 table
+sudo mysql -e "GRANT SELECT ON tyrell_corp.nexus6 TO 'holberton_user'@'localhost';"
+
+#Create a dedicate replica_user that can be used across any specific host (i.e. %);
+#Resource: https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql#step-3-creating-a-replication-user
+sudo mysql -e "CREATE USER 'replica_user'@'%' IDENTIFIED BY 'Mtn08068072124';"
+# Grant the replica user a replication permission
+sudo mysql -e "GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'%';"
+# Grant alx_user select permission on the mysql.users table
+sudo mysql -e "GRANT SELECT ON MYSQL.USER TO 'holberton_user'@'localhost';"
+
+# ===================== CONFIGURING REPLICATION FOR MASTER DB ==========================#
+# Edit the mysql config file and add the following to it
+log_bin         = /var/log/mysql/mysql-bin.log
+server-id       = 1
+binlog_do_db    = tyrell_corp
+#comment out the bind-address to allow connection from all ip address and restart mysql
+sudo systemctl restart mysql
+sudo systemctl status mysql
+
+# Retrieve binary log coordinates for source/master, first lock the master resource and check its status
+sudo mysql -e "FLUSH TABLES WITH READ LOCK;"
+sudo mysql -e "SHOW MASTER STATUS;"
+
+# Since we already have data to migrate now, take a snapshot of your master db
+sudo mysqldump tyrell_corp > tyrell_corp.sql
+
+# Unlock the table after taking the snapshot, and then copy the snapshot to the slave server.
+sudo mysql -e "UNLOCK TABLES;"
+scp tyrell_corp.sql ubuntu@34.232.66.100:/tmp/ #Dont use sudo scp
+
+# login to the slave server, create an empty database and then import the replica into it.
+ssh web2
+sudo mysql -e "CREATE DATABASE IF NOT EXISTS tyrell_corp;"
+sudo mysql tyrell_corp < tyrell_corp.sql
+
+# ===================== CONFIGURING REPLICATION FOR SLAVE DB ==========================#
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf  # Input previous variables and also 
+# relay-log = /var/log/mysql/mysql-relay-bin.log
+sudo systemctl restart mysql
+
+# ===================== REPLICATION TESTING =================#
+sudo mysql # input the following, in mysql8 MASTER=REPLICATION SOURCE and SOURCE=MASTER
+CHANGE MASTER TO
+MASTER_HOST='52.91.120.180',
+    MASTER_USER='replica_user',
+    MASTER_PASSWORD='projectcorrection280hbtn',
+    MASTER_LOG_FILE='mysql-bin.000001',
+    MASTER_LOG_POS=154;
+# Here is it on a single line
+#sudo mysql -e "CHANGE MASTER TO MASTER_HOST='52.91.120.180', MASTER_USER='replica_user', MASTER_PASSWORD='projectcorrection280hbtn', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=154;"
+
+sudo mysql -e "START SLAVE;"
+sudo mysql -e "SHOW SLAVE STATUS\G;"
+sudo mysql -e "START SLAVE;"
+
+
