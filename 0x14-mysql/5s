@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Backup script for our Mysql databases
+file_name=$(date +%d-%m-%y)
+mysqldump -A --user='root' --password="$1" > backup.sql
+tar -czf "$file_name".tar.gz ./backup.sql
