@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Exports result based on a specified user id"""
 import json
 import requests
 from sys import argv

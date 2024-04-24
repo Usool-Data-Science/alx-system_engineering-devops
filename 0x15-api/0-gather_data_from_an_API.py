@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Exports some simple result from the api"""
 import requests
 from sys import argv
 
