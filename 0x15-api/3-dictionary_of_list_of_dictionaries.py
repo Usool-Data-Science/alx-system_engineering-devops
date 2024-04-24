@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Prints the whole information from the api"""
 import json
 import requests
 
