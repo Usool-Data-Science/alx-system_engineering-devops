@@ -1,15 +1,16 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Function to count occurrences of specified words in the titles of hot posts from a given Reddit subreddit.
+Function to count words in all hot posts of a given Reddit subreddit.
 """
 import requests
 
 
-def count_word_occurrences(subreddit, words_to_count, after=None, counts={}):
+def count_words(subreddit, word_list, after=None, counts={}):
     """
-    Recursively fetches hot posts from Reddit API, analyzes their titles, and prints the count of specified words.
+    Recursive function that queries the Reddit API, parses the title of all
+        hot articles, and prints a sorted count of given keywords
     """
-    if not words_to_count or not subreddit:
+    if not word_list or word_list == [] or not subreddit:
         return
 
     url = f"https://www.reddit.com/r/{subreddit}/hot.json"
@@ -28,18 +29,19 @@ def count_word_occurrences(subreddit, words_to_count, after=None, counts={}):
         return
 
     data = response.json()
-    posts = data.get("data", {}).get("children", [])
+    children = data["data"]["children"]
 
-    for post in posts:
-        title = post.get("data", {}).get("title", "").lower()
-        for word in words_to_count:
+    for post in children:
+        title = post["data"]["title"].lower()
+        for word in word_list:
             if word.lower() in title:
                 counts[word] = counts.get(word, 0) + title.count(word.lower())
 
-    after = data.get("data", {}).get("after")
+    after = data["data"]["after"]
     if after:
-        count_word_occurrences(subreddit, words_to_count, after, counts)
+        count_words(subreddit, word_list, after, counts)
     else:
-        sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0].lower()))
+        sorted_counts = sorted(counts.items(),
+                               key=lambda x: (-x[1], x[0].lower()))
         for word, count in sorted_counts:
             print(f"{word.lower()}: {count}")
