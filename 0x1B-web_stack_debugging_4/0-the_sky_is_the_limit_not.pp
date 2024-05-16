@@ -2,7 +2,7 @@
 
 exec { 'debug-nginx':
   # Modify the soft limit
-  command => '/bin/sed -i "s/15/4096" /etc/default/nginx',
+  command => '/bin/sed -i "s/15/4096/" /etc/default/nginx',
   # Indicate the path where the command will be found
   path    => ['/usr/local/bin/', '/bin/'],
 }
