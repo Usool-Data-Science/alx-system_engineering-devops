@@ -1,0 +1,28 @@
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server ipv6only=on;
+
+        # Server Ip is the domain name
+        server_name 52.91.120.180
+
+        # HTTP Response Header
+        add_header X-Served-By $hostname;
+
+        # Custom error message
+        error_page 404 /404.html;
+        location /404.html {
+            internal;
+    }
+
+        # Server the /airbnn-onepage/
+        location = /airbnb-onepage/ {
+            add_header X-Served-By $hostname;
+            include proxy_params;
+            proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
+    }
+
+        # Custom redirection
+        location /redirect_me {
+            return 301 https://cheatsheetbook.com/nginx/;
+    }
+}
