@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# A bash script that setup the web server. It makes routine update,
+# installs required application like puppet, nginx and then calls the
+# puppet master's manifest file to open firewall access for required 
+# communication.
+
+# Routine app package update
+sudo apt-get -y update
+
+# Install puppet
+sudo apt-get install -y ruby=1:2.7+1 --allow-downgrades
+sudo apt-get install -y ruby-augeas
+sudo apt-get install -y ruby-shadow
+sudo apt-get install -y puppet
+sudo gem install puppet-lint
+
+# Install and configure nginx
+sudo apt-get -y install nginx
+mkdir -p /var/www/html
+echo 'Hello World!' > /var/www/html/index.html
+sudo service nginx restart
+
+# Invoke puppet action.
+sudo puppet apply puppet_config.pp
